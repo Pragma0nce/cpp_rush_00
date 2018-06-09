@@ -31,7 +31,7 @@ int main()
     int ch;
     while (game.isRunning())
     {
-        usleep(60000);
+        usleep(12000);
           if ((ch = getch()) == ERR) {
               /* user hasn't responded
                ...
