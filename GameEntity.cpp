@@ -1,10 +1,13 @@
 #include "GameEntity.hpp"
 #include "Game.hpp"
 #include <iostream>
+#include <curses.h>
+
 
 GameEntity::GameEntity()
 {
     m_alive = true;
+    m_colorPair = DEFAULT_PAIR;
 }
 
 GameEntity::GameEntity(char sprite, ENTITY_TYPE type)
@@ -12,11 +15,15 @@ GameEntity::GameEntity(char sprite, ENTITY_TYPE type)
 {
      m_alive = true;
     m_moveSpeed = 1;
+
+    m_colorPair = DEFAULT_PAIR;
+
+    init_pair(DEFAULT_PAIR, COLOR_WHITE, COLOR_BLACK);
 }
 
-void GameEntity::update(Game *world)
+void GameEntity::update(Game *world, int time)
 {
-    if (m_x < 0 || m_x >= BOARD_SIZE_X || m_y < 0 || m_y >= BOARD_SIZE_Y)
+    if (m_x <= 0 || m_x >= BOARD_SIZE_X - 1 | m_y <= 0 || m_y >= BOARD_SIZE_Y - 1)
         die();
 }
 
@@ -26,36 +33,42 @@ void GameEntity::processInput(Game *world, int input)
 }
 
 
-void GameEntity::move(Game *world, int x, int y)
+bool GameEntity::move(Game *world, int x, int y)
 {
     if (world->board[x][y].isEmpty())
-    {
+    { 
         world->board[m_x][m_y].setEntity(0);
         world->board[x][y].setEntity(this);
+        return true;
+    }
+    else 
+    {
+        resolveCollision(world, world->board[x][y].getEntity());
+        return false;
     }
 }
 
 
 void GameEntity::moveLeft(Game *world)
 {
-    move(world, m_x - 1, m_y);
-    m_x--;
+    if (move(world, m_x - 1, m_y))
+        m_x--;
 }
 
 void GameEntity::moveRight(Game *world)
 {
-    move(world, m_x + 1, m_y);
-    m_x++;
+    if (move(world, m_x + 1, m_y))
+        m_x++;
 }
 void GameEntity::moveUp(Game *world)
 {
-    move(world, m_x, m_y - 1);
-    m_y--;
+    if (move(world, m_x, m_y - 1))
+        m_y--;
 }
 void GameEntity::moveDown(Game *world)
 {
-    move(world, m_x, m_y + 1);
-    m_y++;
+    if (move(world, m_x, m_y + 1))
+        m_y++;
 }
 
 void GameEntity::resolveCollision(Game *world, GameEntity *other)
@@ -111,4 +124,9 @@ bool GameEntity::isAlive()
 void GameEntity::die()
 {
     m_alive = false;
+}
+
+int GameEntity::getColorPair()
+{
+    return m_colorPair;
 }

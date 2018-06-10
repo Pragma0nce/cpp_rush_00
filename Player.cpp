@@ -5,14 +5,15 @@
 #include "Projectile.hpp"
 
 
-void Player::update(Game *world)
+void Player::update(Game *world, int time)
 {
-    GameEntity::update(world);
+    GameEntity::update(world,time);
+    // std::cout << "Player: " << m_x << ":" << m_y << std::endl;
 }
 
 void Player::resolvecollision(Game *world)
 {
-
+    std::cout << "SADAS" << std::endl;
 }
 
 void Player::processInput(Game *world, int input)
@@ -33,17 +34,22 @@ void Player::processInput(Game *world, int input)
 
 }
 
+void Player::takeDamage(Game *world)
+{
+    world->setLives(world->getLives() - 1);
+}
+
 void Player::shootRight(Game *world)
 {
-    Projectile *bullet = new Projectile('-', PROJECTILE);
+    Projectile *bullet = new Projectile('*', PROJECTILE);
     bullet->setDirection(1);
 
     world->addEntity(bullet, m_x + 1, m_y);
-    std::cout << "shit" << std::endl;
 }
 
 Player::Player(char sprite, ENTITY_TYPE type)
 :GameEntity(sprite, type)
 {
-
+    init_pair(PLAYER_PAIR, COLOR_WHITE, COLOR_BLUE);
+    m_colorPair = PLAYER_PAIR;
 }

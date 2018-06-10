@@ -1,5 +1,6 @@
 #include "Tile.hpp"
 #include "GameEntity.hpp"
+#include <iostream>
 
 Tile::Tile()
 {
@@ -9,14 +10,15 @@ Tile::Tile()
 
 char Tile::getSprite()
 {
+    
     if (isEmpty())
-        return '.';
+        return ' ';
     else
     {
         if (m_entity->isAlive())
             return m_entity->getSprite();
         else
-            return '.';
+            return ' ';
     }
 }
 GameEntity *Tile::getEntity()
@@ -34,5 +36,7 @@ bool Tile::isEmpty()
     if (m_entity == 0)
         return true;
     else
+    {
         return false;
+    }
 }

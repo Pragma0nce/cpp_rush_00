@@ -13,22 +13,26 @@ int main()
     noecho();
     keypad(stdscr, TRUE);
     nodelay(stdscr, TRUE);
+    start_color();
+    init_pair(1, COLOR_YELLOW, COLOR_GREEN);
 
     Game game;
 
     game.init();
 
-    Player player('P', PLAYER);
-    game.addEntity(&player, 1, 1);
+    Player *player = new Player('A', PLAYER);
+    game.addEntity(player, 1, 1);
 
-    Enemy enemy1('@', ENEMY);
-    Enemy enemy2('@', ENEMY);
-    Enemy enemy3('@', ENEMY);
-    game.addEntity(&enemy1, 25, 1);
-    game.addEntity(&enemy2, 29, 4);
-    game.addEntity(&enemy3, 22, 9);
+    Enemy *enemy1 = new Enemy('@', ENEMY);
+    Enemy *enemy2 = new Enemy('@', ENEMY);
+    Enemy *enemy3 = new Enemy('@', ENEMY);
+    game.addEntity(enemy1, 80, 5);
+    game.addEntity(enemy2, 70, 4);
+    game.addEntity(enemy3, 55, 8);
 
     int ch;
+    int time = 0;
+
     while (game.isRunning())
     {
         usleep(12000);
@@ -40,8 +44,14 @@ int main()
           else {
             game.processInput(ch);
           }   
-        game.update();
+        game.update(time);
         game.render();
+        time++;
+
+        if (time > 10)
+        {
+            time = 0;
+        }
     }
 
     endwin();

@@ -8,5 +8,6 @@ private:
 public:
     Projectile(char c, ENTITY_TYPE type);
     void setDirection(int dir);
-    void update(Game *world);
+    void update(Game *world, int time);
+    void resolveCollision(Game *world, GameEntity *other);
 };

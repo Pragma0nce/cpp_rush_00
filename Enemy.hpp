@@ -1,10 +1,15 @@
 #pragma once
 #include "GameEntity.hpp"
+#include "Timer.hpp"
 
 class Enemy : public GameEntity
 {
 private:
+    Timer m_shootTimer;
 public:
     Enemy(char sprite, ENTITY_TYPE type);
-    void update(Game *world);
+    void update(Game *world, int time);
+    void resolveCollision(Game *world, GameEntity *other);
+
+    void shootLeft(Game *world);
 };
