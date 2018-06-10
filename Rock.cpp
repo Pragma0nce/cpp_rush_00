@@ -10,3 +10,25 @@ Rock::Rock(char sprite, ENTITY_TYPE type)
 {
 
 }
+
+Rock& Rock::operator=(const Rock& other)
+{
+    GameEntity::operator=(other);
+    return (*this);
+};
+
+Rock::Rock(Rock &other)
+:GameEntity(other)
+{
+
+}
+
+Rock::Rock() 
+{
+
+}
+
+Rock::~Rock()
+{
+
+}

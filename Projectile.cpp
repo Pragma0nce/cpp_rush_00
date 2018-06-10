@@ -1,13 +1,15 @@
 #include "Projectile.hpp"
 #include <iostream>
 #include "Player.hpp"
+#include "Game.hpp"
 #include <curses.h>
 
-Projectile::Projectile(char sprite, ENTITY_TYPE type)
+Projectile::Projectile(char sprite, ENTITY_TYPE type, ENTITY_TYPE owner)
 :GameEntity(sprite, type)
 {
     init_pair(BULLET_PAIR, COLOR_YELLOW, COLOR_BLACK);
     m_colorPair = BULLET_PAIR;
+    m_owner = owner;
 }
 
 void Projectile::setDirection(int dir)
@@ -41,8 +43,34 @@ void Projectile::resolveCollision(Game *world, GameEntity *other)
     }
     else if (other->getType() == ENEMY)
     {
+        if (m_owner == PLAYER)
+            world->addToScore(10);
         other->die();
     }
     this->die();
+}
+
+Projectile::Projectile()
+{
+
+}
+
+Projectile::Projectile(Projectile &other)
+:GameEntity(other)
+{
+
+}
+
+Projectile& Projectile::operator=(const Projectile & other)
+{
+    GameEntity::operator=(other);
+    m_owner = other.m_owner;
+    m_direction = other.m_direction;
+    return (*this);
+}
+
+Projectile::~Projectile()
+{
+    
 }
 

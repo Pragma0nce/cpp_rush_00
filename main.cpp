@@ -53,6 +53,6 @@ int main()
             time = 0;
         }
     }
-
     endwin();
+    std::cout << "Final score: " << game.getScore() << std::endl;
 }

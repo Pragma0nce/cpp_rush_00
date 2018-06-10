@@ -10,6 +10,7 @@ void Game::init()
     createBorders();
 
     m_lives = 3;
+    m_score = 0;
     m_spawner = new EnemySpawner(this);
 }
 
@@ -29,6 +30,10 @@ void Game::createBorders()
         Rock *rock = new Rock('|', COLLIDABLE);
         addEntity(rock, 0, i);
     }
+}
+
+void Game::addToScore(int n){
+    m_score+=n;
 }
 
 Game::Game()
@@ -100,6 +105,8 @@ void Game::render()
     wmove(stdscr, BOARD_SIZE_Y, BOARD_SIZE_Y);
     wprintw(stdscr, "LIVES: ");
     wprintw(stdscr, "%d", m_lives);
+    wprintw(stdscr, "            SCORE: ");
+    wprintw(stdscr, "%d", m_score);
 }
 
 void Game::removeDeadEntities()
@@ -146,4 +153,45 @@ int Game::getLives()
 void Game::setLives(int n)
 {
     m_lives = n;
+    if (m_lives == 0)
+    {
+        stopRunning();
+    }
+}
+
+int Game::getScore()
+{
+    return m_score;
+}
+
+Game::Game(Game &other)
+{
+    m_lives = other.m_lives;
+    m_score = other.m_score;
+
+    m_entities = other.m_entities;
+    m_num_entities = other.m_num_entities;
+    m_max_entities = other.m_max_entities;
+    m_running = other.m_running;;
+
+    m_spawner = other.m_spawner;
+}
+
+Game& Game::operator=(const Game& other)
+{
+    m_lives = other.m_lives;
+    m_score = other.m_score;
+
+    m_entities = other.m_entities;
+    m_num_entities = other.m_num_entities;
+    m_max_entities = other.m_max_entities;
+    m_running = other.m_running;;
+
+    m_spawner = other.m_spawner;
+    return (*this);
+}
+
+Game::~Game()
+{
+
 }

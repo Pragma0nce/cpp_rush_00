@@ -26,6 +26,11 @@ Timer::Timer()
 
 }
 
+Timer::~Timer()
+{
+
+}
+
 void Timer::reset()
 {
     timer = std::time(0);
@@ -34,4 +39,15 @@ void Timer::reset()
 double Timer::elapsed() const
 {
     return (std::time(0) - timer);
+}
+
+Timer::Timer(Timer &other)
+{
+    timer = other.timer;
+}
+
+Timer& Timer::operator=(const Timer& other)
+{
+    timer = other.timer;
+    return (*this);
 }

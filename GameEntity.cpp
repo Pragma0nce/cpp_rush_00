@@ -130,3 +130,30 @@ int GameEntity::getColorPair()
 {
     return m_colorPair;
 }
+
+GameEntity::~GameEntity()
+{
+
+}
+
+GameEntity::GameEntity(GameEntity &other)
+{
+    m_sprite = other.m_sprite;
+    m_colorPair = other.m_colorPair;
+    m_type = other.m_type;
+    m_moveSpeed = other.m_type;
+    m_x = other.m_x;
+    m_y = other.m_y;
+    m_alive = other.m_alive;
+}
+GameEntity& GameEntity::operator=(const GameEntity& other)
+{
+    m_sprite = other.m_sprite;
+    m_colorPair = other.m_colorPair;
+    m_type = other.m_type;
+    m_moveSpeed = other.m_type;
+    m_x = other.m_x;
+    m_y = other.m_y;
+    m_alive = other.m_alive;
+    return (*this);
+}

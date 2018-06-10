@@ -4,7 +4,6 @@
 #include <stdlib.h>
 #include <iostream>
 #include <chrono>
-typedef std::chrono::high_resolution_clock Clock;
 
 EnemySpawner::EnemySpawner(Game *world)
 {
@@ -26,4 +25,27 @@ void EnemySpawner::update(int time)
          m_world->addEntity(enemy, BOARD_SIZE_X - 2, randY);
          m_timer.reset();
     }
+}
+
+EnemySpawner::EnemySpawner()
+{
+
+}
+EnemySpawner::EnemySpawner(EnemySpawner &other)
+{
+    m_world = other.m_world;
+    m_timer = other.m_timer;
+}
+
+EnemySpawner& EnemySpawner::operator=(const EnemySpawner& other)
+{
+    m_world = other.m_world;
+    m_timer = other.m_timer;
+
+    return (*this);
+}
+
+EnemySpawner::~EnemySpawner()
+{
+
 }

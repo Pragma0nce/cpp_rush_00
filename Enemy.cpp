@@ -4,6 +4,16 @@
 #include "Game.hpp"
 #include <iostream>
 
+Enemy::Enemy()
+{
+    
+};
+
+Enemy::~Enemy()
+{
+
+}
+
 void Enemy::update(Game *world, int time)
 {
     if (time >= 10){
@@ -12,7 +22,8 @@ void Enemy::update(Game *world, int time)
         moveLeft(world);
     }
 
-    if (m_shootTimer.elapsed() >= 3)
+
+    if (m_shootTimer.elapsed() >= m_randTime)
     {
         bool canShoot = false;
         // only shoot if it's clear
@@ -36,7 +47,9 @@ void Enemy::update(Game *world, int time)
 Enemy::Enemy(char sprite, ENTITY_TYPE type)
 :GameEntity(sprite, type)
 {
+    srand (time(NULL));
     m_shootTimer.reset();
+    m_randTime = rand() % 5 + 2;
 }
 
 void Enemy::resolveCollision(Game *world, GameEntity *other)
@@ -51,8 +64,23 @@ void Enemy::resolveCollision(Game *world, GameEntity *other)
 
 void Enemy::shootLeft(Game *world)
 {
-    Projectile *bullet = new Projectile('=', PROJECTILE);
+    Projectile *bullet = new Projectile('=', PROJECTILE, ENEMY);
     bullet->setDirection(-1);
 
     world->addEntity(bullet, m_x - 1, m_y);   
+    m_randTime = rand() % 5 + 2;
 }
+
+Enemy::Enemy(Enemy &other)
+{
+    m_shootTimer = other.m_shootTimer;
+    m_randTime = other.m_randTime;
+}
+
+Enemy& Enemy::operator=(const Enemy& other)
+{
+    m_shootTimer = other.m_shootTimer;
+    m_randTime = other.m_randTime;
+    return (*this);
+}
+

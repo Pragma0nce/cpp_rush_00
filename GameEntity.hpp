@@ -28,8 +28,12 @@ protected:
     int m_y;
 
     bool m_alive;
+
+    GameEntity(GameEntity &other);
+    GameEntity& operator=(const GameEntity& other);
 public:
     GameEntity();
+    ~GameEntity();
     GameEntity(char sprite, ENTITY_TYPE type);
 
     virtual void update(Game *world, int time);

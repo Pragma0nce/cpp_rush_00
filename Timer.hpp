@@ -20,8 +20,13 @@ class Timer
 {
 private:
     time_t timer;
+protected:
 public:
+    Timer(Timer &other);
+    Timer& operator=(const Timer& other);
     Timer();
     void reset();
     double elapsed() const;
+
+    ~Timer();
 };

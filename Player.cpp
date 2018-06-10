@@ -41,7 +41,7 @@ void Player::takeDamage(Game *world)
 
 void Player::shootRight(Game *world)
 {
-    Projectile *bullet = new Projectile('*', PROJECTILE);
+    Projectile *bullet = new Projectile('*', PROJECTILE, PLAYER);
     bullet->setDirection(1);
 
     world->addEntity(bullet, m_x + 1, m_y);
@@ -52,4 +52,15 @@ Player::Player(char sprite, ENTITY_TYPE type)
 {
     init_pair(PLAYER_PAIR, COLOR_WHITE, COLOR_BLUE);
     m_colorPair = PLAYER_PAIR;
+}
+
+Player::Player(Player &other)
+:GameEntity(other)
+{
+
+}
+
+Player::~Player()
+{
+    
 }

@@ -40,3 +40,23 @@ bool Tile::isEmpty()
         return false;
     }
 }
+
+Tile::Tile(Tile &other)
+{
+    m_sprite = other.m_sprite;
+    m_entity = other.m_entity;
+    m_empty = other.m_empty;
+}
+
+Tile& Tile::operator=(const Tile& other)
+{
+    m_sprite = other.m_sprite;
+    m_entity = other.m_entity;
+    m_empty = other.m_empty;
+    return (*this);
+}
+
+Tile::~Tile()
+{
+
+}

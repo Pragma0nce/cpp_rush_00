@@ -11,6 +11,7 @@ class Game
 {
 private:
     int m_lives;
+    int m_score;
 
     GameEntity **m_entities;
     int m_num_entities;
@@ -20,6 +21,10 @@ private:
     EnemySpawner *m_spawner;
 
     void createBorders();
+
+protected:
+    Game(Game &other);
+    Game& operator=(const Game& other);
 public:
     Game();
 
@@ -39,4 +44,9 @@ public:
 
     int getLives();
     void setLives(int n);
+
+    void addToScore(int n);
+    int getScore();
+
+    ~Game();
 };
