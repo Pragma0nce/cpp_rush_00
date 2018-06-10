@@ -41,10 +41,14 @@ void Player::takeDamage(Game *world)
 
 void Player::shootRight(Game *world)
 {
-    Projectile *bullet = new Projectile('*', PROJECTILE, PLAYER);
-    bullet->setDirection(1);
+    if (m_shootTimer.elapsed() >= 0.2)
+    {
+        Projectile *bullet = new Projectile('*', PROJECTILE, PLAYER);
+        bullet->setDirection(1);
 
-    world->addEntity(bullet, m_x + 1, m_y);
+        world->addEntity(bullet, m_x + 1, m_y);
+        m_shootTimer.reset();
+    }
 }
 
 Player::Player(char sprite, ENTITY_TYPE type)
@@ -52,6 +56,14 @@ Player::Player(char sprite, ENTITY_TYPE type)
 {
     init_pair(PLAYER_PAIR, COLOR_WHITE, COLOR_BLUE);
     m_colorPair = PLAYER_PAIR;
+    m_shootTimer.reset();
+}
+
+Player& Player::operator=(const Player& other)
+{
+    GameEntity::operator=(other);
+    m_shootTimer = other.m_shootTimer;
+    return (*this);
 }
 
 Player::Player(Player &other)

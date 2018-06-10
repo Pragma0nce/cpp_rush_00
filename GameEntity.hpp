@@ -5,6 +5,8 @@ class Game;
 #define DEFAULT_PAIR     1
 #define BULLET_PAIR      2
 #define PLAYER_PAIR      3
+#define ENEMY_PAIR       4
+#define ENEMY_BULLET_PAIR 5
 
 enum ENTITY_TYPE
 {

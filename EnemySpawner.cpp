@@ -21,7 +21,7 @@ void EnemySpawner::update(int time)
 
     if (m_timer.elapsed()>= 1)
     {
-         Enemy *enemy = new Enemy('@', ENEMY);
+         Enemy *enemy = new Enemy('(', ENEMY);
          m_world->addEntity(enemy, BOARD_SIZE_X - 2, randY);
          m_timer.reset();
     }

@@ -11,7 +11,12 @@ void Game::init()
 
     m_lives = 3;
     m_score = 0;
+    m_gameSpeed = 10000;
     m_spawner = new EnemySpawner(this);
+    m_rockspawner = new AsteroidSpawner(this);
+    m_timer.reset();
+
+    m_gameTime.reset();
 }
 
 void Game::createBorders()
@@ -62,7 +67,14 @@ void Game::update(int time)
     }
 
     m_spawner->update(time);
+    m_rockspawner->update(time);
     removeDeadEntities();
+
+    if (m_timer.elapsed() >= 5)
+    {
+        m_gameSpeed -= 100;
+        m_timer.reset();
+    }
 }
 
 void Game::processInput(int ch)
@@ -107,6 +119,8 @@ void Game::render()
     wprintw(stdscr, "%d", m_lives);
     wprintw(stdscr, "            SCORE: ");
     wprintw(stdscr, "%d", m_score);
+    wprintw(stdscr, "            TIME: ");
+    wprintw(stdscr, "%d", getGameTime());
 }
 
 void Game::removeDeadEntities()
@@ -189,6 +203,16 @@ Game& Game::operator=(const Game& other)
 
     m_spawner = other.m_spawner;
     return (*this);
+}
+
+int Game::getGameSpeed()
+{
+    return m_gameSpeed;
+}
+
+int Game::getGameTime()
+{
+    return m_gameTime.elapsed();
 }
 
 Game::~Game()

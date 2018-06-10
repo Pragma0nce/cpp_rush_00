@@ -7,8 +7,15 @@
 Projectile::Projectile(char sprite, ENTITY_TYPE type, ENTITY_TYPE owner)
 :GameEntity(sprite, type)
 {
-    init_pair(BULLET_PAIR, COLOR_YELLOW, COLOR_BLACK);
-    m_colorPair = BULLET_PAIR;
+    if (owner == PLAYER)
+    {
+        init_pair(BULLET_PAIR, COLOR_YELLOW, COLOR_BLACK);
+        m_colorPair = BULLET_PAIR;
+    }
+    else {
+        init_pair(ENEMY_BULLET_PAIR, COLOR_CYAN, COLOR_BLACK);
+        m_colorPair = ENEMY_BULLET_PAIR;        
+    }
     m_owner = owner;
 }
 
@@ -45,6 +52,10 @@ void Projectile::resolveCollision(Game *world, GameEntity *other)
     {
         if (m_owner == PLAYER)
             world->addToScore(10);
+        other->die();
+    }
+    else if (other->getType() == PROJECTILE)
+    {
         other->die();
     }
     this->die();

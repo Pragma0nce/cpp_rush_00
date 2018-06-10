@@ -20,22 +20,22 @@ int main()
 
     game.init();
 
-    Player *player = new Player('A', PLAYER);
+    Player *player = new Player('>', PLAYER);
     game.addEntity(player, 1, 1);
 
-    Enemy *enemy1 = new Enemy('@', ENEMY);
-    Enemy *enemy2 = new Enemy('@', ENEMY);
-    Enemy *enemy3 = new Enemy('@', ENEMY);
-    game.addEntity(enemy1, 80, 5);
-    game.addEntity(enemy2, 70, 4);
-    game.addEntity(enemy3, 55, 8);
+    // Enemy *enemy1 = new Enemy('(', ENEMY);
+    // Enemy *enemy2 = new Enemy('(', ENEMY);
+    // Enemy *enemy3 = new Enemy('(', ENEMY);
+    // game.addEntity(enemy1, 80, 5);
+    // game.addEntity(enemy2, 70, 4);
+    // game.addEntity(enemy3, 55, 8);
 
     int ch;
     int time = 0;
 
     while (game.isRunning())
     {
-        usleep(12000);
+        usleep(game.getGameSpeed());
           if ((ch = getch()) == ERR) {
               /* user hasn't responded
                ...

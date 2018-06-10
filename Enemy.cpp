@@ -3,6 +3,7 @@
 #include "Projectile.hpp"
 #include "Game.hpp"
 #include <iostream>
+#include <ncurses.h>
 
 Enemy::Enemy()
 {
@@ -50,6 +51,8 @@ Enemy::Enemy(char sprite, ENTITY_TYPE type)
     srand (time(NULL));
     m_shootTimer.reset();
     m_randTime = rand() % 5 + 2;
+    init_pair(ENEMY_PAIR, COLOR_RED, COLOR_BLACK);
+    m_colorPair = ENEMY_PAIR;
 }
 
 void Enemy::resolveCollision(Game *world, GameEntity *other)
